@@ -1,37 +1,20 @@
-// @ts-nocheck
-import { memo } from 'react';
+import { memo } from "react";
 
-import { Alert, Spin, Row, Col } from 'antd';
-import { useQuery } from 'react-query';
+import { Alert, Spin } from "antd";
+import { useGetUserQuery } from "api/user";
 
 const FetchUserError = () => {
-  const { isLoading, error, failureCount } = useQuery('FetchUserError', () =>
-    fetch('https://reqres.in/api/users/42?delay=3').then(res => {
-      console.log(res);
-      if (res.ok) {
-        res.json();
-      } else {
-        throw new Error('User not found.');
-      }
-    }),
-  );
+  const { isLoading, error } = useGetUserQuery("42");
 
-  if (error) {
-    return <Alert message={error.message} type="error" />;
+  if (isLoading) {
+    return <Spin />;
   }
 
-  return (
-    <Row align="middle" justify="center">
-      <Col></Col>
-      <Col xs={24}>
-        <Alert
-          type="warning"
-          message={`Failure count: ${failureCount}`}
-          action={isLoading && <Spin />}
-        />
-      </Col>
-    </Row>
-  );
+  if (error) {
+    return <Alert message={JSON.stringify(error)} type="error" />;
+  }
+
+  return null;
 };
 
-export default memo(FetchUserError)
+export default memo(FetchUserError);

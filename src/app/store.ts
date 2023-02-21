@@ -4,6 +4,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 
 import counterReducer from "../_old/counter/counterSlice";
 import { userApi } from "api/user";
+import { rtkQueryErrorLogger } from "./middleware";
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,7 @@ export const store = configureStore({
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(userApi.middleware),
+    getDefaultMiddleware().concat(userApi.middleware, rtkQueryErrorLogger),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
