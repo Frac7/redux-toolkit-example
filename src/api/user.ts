@@ -9,10 +9,6 @@ export type User = {
   email: string;
 };
 
-type UserList = {
-  data: User[];
-};
-
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -20,14 +16,18 @@ export const userApi = createApi({
     baseUrl: "https://reqres.in/api/users",
   }),
   endpoints: (builder) => ({
-    getUserList: builder.query<UserList, void>({
+    getUserList: builder.query<User[], void>({
       query: () => "/",
+      transformResponse: (response: { data: User[] }) => response.data,
+    }),
+    getUser: builder.query<User, number>({
+      query: (id) => `/${id}`,
     }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserListQuery } = userApi;
+export const { useGetUserListQuery, useGetUserQuery } = userApi;
 
 // See https://redux-toolkit.js.org/tutorials/rtk-query/
