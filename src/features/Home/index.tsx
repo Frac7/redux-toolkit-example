@@ -1,5 +1,7 @@
-import { memo } from 'react';
-import { Col, Layout, Row, Typography } from 'antd';
+import { memo } from "react";
+import { Col, Layout, Row, Typography } from "antd";
+
+import logo from "logo.svg";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -8,16 +10,13 @@ const Home = () => (
   <Content>
     <Row justify="center">
       <Col>
-        <Title>react-query demo</Title>
+        <Title>redux-toolkit demo</Title>
       </Col>
     </Row>
     <Row justify="center">
-      <img
-        alt="react-query-logo"
-        src="https://react-query.tanstack.com/_next/static/images/emblem-light-5d1cdce6c8bbb006ac6cefb8e1642877.svg"
-      />
+      <img width="100" height="100" alt="redux-logo" src={logo} />
     </Row>
   </Content>
 );
 
-export default memo(Home)
+export default memo(Home);
