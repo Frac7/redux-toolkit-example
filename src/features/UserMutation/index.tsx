@@ -1,5 +1,4 @@
-// @ts-nocheck
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useState } from "react";
 
 import {
   Row,
@@ -10,76 +9,63 @@ import {
   Button,
   Typography,
   Alert,
-} from 'antd';
-import { useQuery, useQueryClient, useMutation } from 'react-query';
+} from "antd";
 
-import { put } from '../../services/userMutation';
+import { useGetUserQuery, useUpdateUserMutation } from "api/user";
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
 
-const UserMutation =  () => {
-  const [name, setName] = useState('');
+const UserMutation = () => {
+  const [name, setName] = useState("");
 
-  const queryClient = useQueryClient();
   // First query to fetch user information
-  const { isLoading: isQueryLoading, data: queryData } = useQuery(
-    'SingleUser',
-    () =>
-      fetch('https://reqres.in/api/users/1?delay=3').then(res => res.json()),
-  );
+  const { isLoading: isQueryLoading, data: queryData } = useGetUserQuery("1");
   // Mutation for updating user information
-  const {
-    isLoading: isMutationLoading,
-    data: mutationData,
-    ...mutation
-  } = useMutation(put, {
-    onSuccess: (
-      newData, // If the mutation is sucessful, new data can be set using 'setQueryData' function, without the needed to re-invoke the fetch
-    ) =>
-      queryClient.setQueryData('SingleUser', old => ({ ...old, ...newData })),
-  });
+  const [updateUser, { isLoading: isMutationLoading, data: mutationData }] =
+    useUpdateUserMutation();
 
-  const item = useMemo(
-    () => ({ ...queryData?.data, ...mutationData }),
-    [queryData, mutationData],
-  );
-  useEffect(() => {
-    setName(item.first_name);
-  }, [item]);
-  const handleMutate = () => mutation.mutate({ ...item, first_name: name }); // Triggers the mutation (PUT call)
+  const handleMutate = () =>
+    updateUser({ ...queryData, first_name: name, id: "1" });
 
   return (
     <Row gutter={[0, 8]}>
       <Col xs={24}>
         {!isQueryLoading && !isMutationLoading && (
-          <Alert message={`Fetched username: ${item.first_name}`} type="info" />
+          <Alert
+            message={`Fetched username: ${queryData?.first_name || ""}`}
+            type="info"
+          />
         )}
       </Col>
       <Col xs={24}>
         <Card
           actions={
-            !isQueryLoading && [
-              <Button
-                onClick={handleMutate}
-                loading={isMutationLoading}
-                disabled={!name}
-              >
-                Update
-              </Button>,
-            ]
+            !isQueryLoading
+              ? [
+                  <Button
+                    onClick={handleMutate}
+                    loading={isMutationLoading}
+                    disabled={!name}
+                  >
+                    Update
+                  </Button>,
+                ]
+              : undefined
           }
         >
           <Meta
-            avatar={<Avatar src={item.avatar} />}
+            avatar={<Avatar src={queryData?.avatar} />}
             title={
               isQueryLoading || isMutationLoading ? (
                 <Skeleton />
               ) : (
-                <Paragraph editable={{ onChange: setName }}>{name}</Paragraph>
+                <Paragraph editable={{ onChange: setName }}>
+                  {name || mutationData?.first_name || queryData?.first_name}
+                </Paragraph>
               )
             }
-            description={item.email}
+            description={queryData?.email}
           />
         </Card>
       </Col>
@@ -87,4 +73,4 @@ const UserMutation =  () => {
   );
 };
 
-export default memo(UserMutation)
+export default memo(UserMutation);

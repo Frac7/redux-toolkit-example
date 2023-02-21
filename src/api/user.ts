@@ -20,14 +20,23 @@ export const userApi = createApi({
       query: () => "/",
       transformResponse: (response: { data: User[] }) => response.data,
     }),
-    getUser: builder.query<User, number>({
+    getUser: builder.query<User, string>({
       query: (id) => `/${id}`,
+      transformResponse: (response: { data: User }) => response.data,
+    }),
+    updateUser: builder.mutation<User, Partial<User> & Pick<User, "id">>({
+      query: ({ id, ...patch }: User) => ({
+        url: `/${id}`,
+        method: "PATCH",
+        body: patch,
+      }),
     }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserListQuery, useGetUserQuery } = userApi;
+export const { useGetUserListQuery, useGetUserQuery, useUpdateUserMutation } =
+  userApi;
 
 // See https://redux-toolkit.js.org/tutorials/rtk-query/
