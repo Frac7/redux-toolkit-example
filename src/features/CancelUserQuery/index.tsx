@@ -1,59 +1,60 @@
-// @ts-nocheck
-import { memo } from 'react';
+import { memo, useEffect } from "react";
+import { Card, Avatar, Alert, Button, Skeleton } from "antd";
 
-import { Card, Avatar, Alert, Button, Skeleton } from 'antd';
-import { useQueryClient, useQuery } from 'react-query';
-
-import { endpoint } from '../../services/cancelUserQuery';
+import { useLazyGetUserQuery } from "api/user";
 
 const { Meta } = Card;
 
 const CancelUserQuery = () => {
-  const queryClient = useQueryClient();
-  const handleStop = () => {
-    queryClient.cancelQueries('CancelUserQuery');
-  };
-  const handleRetry = () => {
-    queryClient.refetchQueries('CancelUserQuery');
+  const [trigger, { isLoading, data: user, isFetching, isError }] =
+    useLazyGetUserQuery();
+
+  useEffect(() => {
+    if (typeof trigger === "function") {
+      const request = trigger("1");
+      setTimeout(() => {
+        request.abort();
+      }, 1000);
+    }
+  }, [trigger]);
+
+  const handleFetch = () => {
+    trigger("1");
   };
 
-  const { isLoading, isIdle, data } = useQuery('CancelUserQuery', endpoint);
-
-  if (isIdle) {
+  if (isError) {
     return (
       <Alert
         message="The request was canceled"
         type="warning"
-        action={<Button onClick={handleRetry}>Retry</Button>}
+        action={<Button onClick={handleFetch}>Retry</Button>}
       />
     );
   }
 
-  const item = data?.data;
-
   return (
     <Card
-      actions={
-        isLoading && [
-          <Button disabled={isIdle} onClick={handleStop}>
-            Cancel query
-          </Button>,
-        ]
-      }
+      actions={[
+        <Button disabled={isLoading || isFetching} onClick={handleFetch}>
+          Fetch data
+        </Button>,
+      ]}
     >
       <Meta
-        avatar={<Avatar src={item?.avatar} />}
+        avatar={<Avatar src={user?.avatar} />}
         title={
           isLoading ? (
             <Skeleton />
           ) : (
-            `${item?.first_name || ''} ${item?.last_name || ''}`
+            `${user?.first_name || ""} ${user?.last_name || ""}`
           )
         }
-        description={item?.email}
+        description={user?.email}
       />
     </Card>
   );
 };
 
-export default memo(CancelUserQuery)
+export default memo(CancelUserQuery);
+
+// See https://redux-toolkit.js.org/rtk-query/api/created-api/hooks#uselazyquery

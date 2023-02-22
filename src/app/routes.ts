@@ -1,7 +1,7 @@
 import UserList from "features/UserList";
 import PaginatedUserList from "features/PaginatedUserList";
 // import CachedUser from "features/CachedUser"; // See https://redux-toolkit.js.org/rtk-query/usage/cache-behavior and https://redux-toolkit.js.org/rtk-query/usage/manual-cache-updates
-// import CancelUserQuery from "features/CancelUserQuery"; // See https://redux-toolkit.js.org/rtk-query/api/created-api/hooks#uselazyquery
+import CancelUserQuery from "features/CancelUserQuery";
 import UserMutation from "features/UserMutation";
 import FetchUserError from "features/FetchUserError";
 
@@ -31,9 +31,9 @@ export const routes = [
   //   title: "Cached User",
   //   component: CachedUser,
   // },
-  // {
-  //   path: "/cancel-user-query",
-  //   title: "Cancel User Query",
-  //   component: CancelUserQuery,
-  // },
+  {
+    path: "/cancel-user-query",
+    title: "Cancel User Query",
+    component: CancelUserQuery,
+  },
 ];
