@@ -1,6 +1,8 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+import { Paginated } from "app/types";
+
 export type User = {
   id: string;
   avatar: string;
@@ -16,9 +18,8 @@ export const userApi = createApi({
     baseUrl: "https://reqres.in/api/users",
   }),
   endpoints: (builder) => ({
-    getUserList: builder.query<User[], void>({
-      query: () => "/",
-      transformResponse: (response: { data: User[] }) => response.data,
+    getUserList: builder.query<Paginated<User>, number | void>({
+      query: (page) => page ? `?page=${page}` : '',
     }),
     getUser: builder.query<User, string>({
       query: (id) => `/${id}`,
@@ -36,7 +37,13 @@ export const userApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserListQuery, useGetUserQuery, useUpdateUserMutation } =
-  userApi;
+export const {
+  useGetUserListQuery,
+  //
+  useGetUserQuery,
+  useLazyGetUserQuery,
+  //
+  useUpdateUserMutation,
+} = userApi;
 
 // See https://redux-toolkit.js.org/tutorials/rtk-query/

@@ -4,7 +4,7 @@ import { Row, Col, Card, List, Avatar, Spin } from "antd";
 import { useGetUserListQuery } from "api/user";
 
 const UserList = () => {
-  const { isLoading, data } = useGetUserListQuery();
+  const { isLoading, data: response } = useGetUserListQuery();
 
   if (isLoading) {
     return (
@@ -20,7 +20,7 @@ const UserList = () => {
     <Card>
       <List
         itemLayout="horizontal"
-        dataSource={data}
+        dataSource={response?.data}
         renderItem={(user) => (
           <List.Item key={user?.id}>
             <List.Item.Meta
