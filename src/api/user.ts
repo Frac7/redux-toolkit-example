@@ -61,6 +61,10 @@ export const {
   useLazyGetUserQuery,
   //
   useUpdateUserMutation,
+  //
+  endpoints: {
+    getUser: { useQuerySubscription, useQueryState },
+  },
 } = userApi;
 
 // See https://redux-toolkit.js.org/tutorials/rtk-query/

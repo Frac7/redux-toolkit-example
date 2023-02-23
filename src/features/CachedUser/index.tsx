@@ -5,13 +5,6 @@ import { useGetUserQuery } from "api/user";
 
 const { Meta } = Card;
 
-const initialData = {
-  data: {
-    id: 1,
-    avatar: "https://reqres.in/img/faces/1-image.jpg",
-  },
-};
-
 const CachedUser = () => {
   const {
     data: user,

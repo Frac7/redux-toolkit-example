@@ -1,6 +1,8 @@
 import { memo } from "react";
-
 import { Alert, Spin } from "antd";
+
+import ErrorMessage from "components/ErrorMessage";
+
 import { useGetUserQuery } from "api/user";
 
 const FetchUserError = () => {
@@ -11,14 +13,7 @@ const FetchUserError = () => {
   }
 
   if (error) {
-    const message = (
-      <>
-        Si è verificato un errore.
-        <br />
-        <code>{JSON.stringify(error)}</code>
-      </>
-    );
-    return <Alert message={message} type="error" />;
+    return <Alert message={<ErrorMessage error={error} />} type="error" />;
   }
 
   return null;
