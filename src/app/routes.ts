@@ -1,3 +1,4 @@
+import UserWithActions from "features/UserWithActions";
 import PaginatedUserList from "features/PaginatedUserList";
 import UserSubscriptionAndState from "features/UserSubscriptionAndState";
 import UserPrefetch from "features/UserPrefetch";
@@ -9,6 +10,11 @@ import CachedUserMutation from "features/CachedUserMutation";
 import CancelUserQuery from "features/CancelUserQuery";
 
 export const routes = [
+  {
+    path: "/user-with-actions",
+    title: "User with actions and async actions",
+    component: UserWithActions,
+  },
   {
     path: "/paginated-user-list",
     title: "Paginated User List",

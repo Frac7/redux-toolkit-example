@@ -2,13 +2,13 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-import counterReducer from "../_old/counter/counterSlice";
+import userWithActionsReducer from "features/UserWithActions/slice";
 import { userApi } from "api/user";
 import { rtkQueryErrorLogger } from "./middleware";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    userWithActions: userWithActionsReducer,
     // Add the generated reducer as a specific top-level slice
     [userApi.reducerPath]: userApi.reducer,
   },

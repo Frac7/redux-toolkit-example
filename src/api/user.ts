@@ -6,17 +6,8 @@ import {
 } from "@reduxjs/toolkit/query/react";
 
 import { GET_USER_MAX_CACHE_AGE_IN_SECONDS } from "app/constants";
-import { Paginated } from "app/types";
+import { User, Paginated } from "app/types";
 import { GET_USER_ENDPOINT_NAME } from "features/UserPrefetch/constants";
-
-export type User = {
-  id: number;
-  score?: number;
-  avatar: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-};
 
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
