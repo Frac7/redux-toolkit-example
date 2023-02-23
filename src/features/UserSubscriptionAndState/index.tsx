@@ -9,9 +9,11 @@ const { Meta } = Card;
 const UserSubscriptionAndState = () => {
   const [id, setId] = useState(1);
 
+  // Using these 2 hooks together is the same as using only the "useQuery" hook
   const { refetch } = useQuerySubscription({ id });
   const { data: user, isLoading, error } = useQueryState({ id });
 
+  // These features are useful to check the cache behaviour - see the Network tab and the cache configuration inside the "createApi" function
   const handleFetchPrev = () => setId((id) => Math.max(1, id - 1));
   const handleFetchNext = () => setId((id) => id + 1);
 

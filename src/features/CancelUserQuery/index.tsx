@@ -34,6 +34,7 @@ const CancelUserQuery = () => {
 
   return (
     <Card
+      title="The request will be canceled if not fulfilled in 2.5 seconds"
       actions={[
         <Button disabled={isLoading || isFetching} onClick={handleFetch}>
           Fetch data

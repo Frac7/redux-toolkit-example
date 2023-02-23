@@ -34,9 +34,9 @@ export const userApi = createApi({
         } as FetchArgs),
     }),
     getUser: builder.query<User, { id: number; delay?: number }>({
-      query: (params) =>
+      query: ({ id, ...params }) =>
         ({
-          url: "/",
+          url: `/${id}`,
           params,
         } as FetchArgs),
       transformResponse: (response: { data: User }) => response.data,
