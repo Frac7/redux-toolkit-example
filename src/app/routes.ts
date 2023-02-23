@@ -1,15 +1,15 @@
-import UserList from "features/UserList";
 import PaginatedUserList from "features/PaginatedUserList";
-// import CachedUser from "features/CachedUser"; // See https://redux-toolkit.js.org/rtk-query/usage/cache-behavior and https://redux-toolkit.js.org/rtk-query/usage/manual-cache-updates
-import CancelUserQuery from "features/CancelUserQuery";
-import UserMutation from "features/UserMutation";
 import FetchUserError from "features/FetchUserError";
+import UserMutation from "features/UserMutation";
+import CachedUser from "features/CachedUser";
+import CancelUserQuery from "features/CancelUserQuery";
+// TODO: Evaluate the creation of a component to handle prefetching, see https://redux-toolkit.js.org/rtk-query/usage/prefetching
 
 export const routes = [
   {
-    path: "/user-list",
-    title: "User List",
-    component: UserList,
+    path: "/paginated-user-list",
+    title: "Paginated User List",
+    component: PaginatedUserList,
   },
   {
     path: "/fetch-user-error",
@@ -22,15 +22,10 @@ export const routes = [
     component: UserMutation,
   },
   {
-    path: "/paginated-user-list",
-    title: "Paginated User List",
-    component: PaginatedUserList,
+    path: "/cached-user",
+    title: "Cached User",
+    component: CachedUser,
   },
-  // {
-  //   path: "/cached-user",
-  //   title: "Cached User",
-  //   component: CachedUser,
-  // },
   {
     path: "/cancel-user-query",
     title: "Cancel User Query",

@@ -11,15 +11,15 @@ const CancelUserQuery = () => {
 
   useEffect(() => {
     if (typeof trigger === "function") {
-      const request = trigger("1");
+      const request = trigger({ id: 1, delay: 5 });
       setTimeout(() => {
         request.abort();
-      }, 1000);
+      }, 2500);
     }
   }, [trigger]);
 
   const handleFetch = () => {
-    trigger("1");
+    trigger({ id: 1, delay: 1 });
   };
 
   if (isError) {

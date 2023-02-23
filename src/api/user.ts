@@ -1,5 +1,9 @@
 // Need to use the React-specific entry point to import createApi
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {
+  FetchArgs,
+  createApi,
+  fetchBaseQuery,
+} from "@reduxjs/toolkit/query/react";
 
 import { Paginated } from "app/types";
 
@@ -17,13 +21,26 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://reqres.in/api/users",
   }),
+  keepUnusedDataFor: 30,
   endpoints: (builder) => ({
-    getUserList: builder.query<Paginated<User>, number | void>({
-      query: (page) => page ? `?page=${page}` : '',
+    getUserList: builder.query<
+      Paginated<User>,
+      { page?: number; delay?: number } | void
+    >({
+      query: (params) =>
+        ({
+          url: "",
+          params,
+        } as FetchArgs),
     }),
-    getUser: builder.query<User, string>({
-      query: (id) => `/${id}`,
+    getUser: builder.query<User, { id: number; delay?: number }>({
+      query: (params) =>
+        ({
+          url: "/",
+          params,
+        } as FetchArgs),
       transformResponse: (response: { data: User }) => response.data,
+      keepUnusedDataFor: 5,
     }),
     updateUser: builder.mutation<User, Partial<User> & Pick<User, "id">>({
       query: ({ id, ...patch }: User) => ({

@@ -1,44 +1,43 @@
-// @ts-nocheck
-import { memo } from 'react';
+import { memo } from "react";
+import { Card, Avatar, Skeleton } from "antd";
 
-import { Card, Avatar, Skeleton } from 'antd';
-import { useQuery } from 'react-query';
+import { useGetUserQuery } from "api/user";
 
 const { Meta } = Card;
 
-const CachedUser = () => {
-  const { data, isFetched } = useQuery(
-    'CachedUser',
-    () =>
-      fetch('https://reqres.in/api/users/1?delay=3').then(res => res.json()),
-    {
-      // Partial data needed to populate the cache, data shown when the actual data is loading
-      initialData: {
-        data: {
-          id: 1,
-          avatar: 'https://reqres.in/img/faces/1-image.jpg',
-        },
-      },
-    },
-  );
+const initialData = {
+  data: {
+    id: 1,
+    avatar: "https://reqres.in/img/faces/1-image.jpg",
+  },
+};
 
-  const item = data?.data;
+const CachedUser = () => {
+  const {
+    data: user,
+    isLoading,
+    refetch,
+    isUninitialized,
+  } = useGetUserQuery({ id: 1 });
 
   return (
     <Card>
       <Meta
-        avatar={<Avatar src={item?.avatar} />}
+        avatar={<Avatar src={user?.avatar} />}
         title={
-          isFetched ? (
-            `${item?.first_name || ''} ${item?.last_name || ''}`
+          !isUninitialized ? (
+            `${user?.first_name || ""} ${user?.last_name || ""}`
           ) : (
             <Skeleton />
           )
         }
-        description={item?.email}
+        description={user?.email}
       />
     </Card>
   );
 };
 
-export default memo(CachedUser)
+export default memo(CachedUser);
+
+// See https://redux-toolkit.js.org/rtk-query/usage/cache-behavior and https://redux-toolkit.js.org/rtk-query/usage/manual-cache-updates
+// TODO: Change this example with mutations

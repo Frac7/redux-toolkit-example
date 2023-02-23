@@ -14,7 +14,11 @@ const PaginatedUserList = () => {
       Math.min(response?.total_pages || 1, currentPage + 1)
     );
 
-  const { isLoading, data: response, isFetching } = useGetUserListQuery(page);
+  const {
+    isLoading,
+    data: response,
+    isFetching,
+  } = useGetUserListQuery({ page, delay: 3 });
 
   if (isLoading) {
     return (
@@ -65,4 +69,5 @@ const PaginatedUserList = () => {
 
 export default memo(PaginatedUserList);
 
+// See https://redux-toolkit.js.org/rtk-query/usage/queries
 // See https://redux-toolkit.js.org/rtk-query/usage/pagination
