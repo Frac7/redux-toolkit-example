@@ -1,0 +1,1 @@
+export const GET_USER_MAX_CACHE_AGE_IN_SECONDS = 5

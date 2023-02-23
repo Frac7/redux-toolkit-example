@@ -5,6 +5,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 
+import { GET_USER_MAX_CACHE_AGE_IN_SECONDS } from "app/constants";
 import { Paginated } from "app/types";
 
 export type User = {
@@ -40,7 +41,7 @@ export const userApi = createApi({
           params,
         } as FetchArgs),
       transformResponse: (response: { data: User }) => response.data,
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: GET_USER_MAX_CACHE_AGE_IN_SECONDS,
     }),
     updateUser: builder.mutation<User, Partial<User> & Pick<User, "id">>({
       query: ({ id, ...patch }: User) => ({
@@ -65,6 +66,8 @@ export const {
   endpoints: {
     getUser: { useQuerySubscription, useQueryState },
   },
+  //
+  usePrefetch
 } = userApi;
 
 // See https://redux-toolkit.js.org/tutorials/rtk-query/
