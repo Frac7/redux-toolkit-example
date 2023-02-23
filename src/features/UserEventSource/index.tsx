@@ -2,14 +2,13 @@ import { memo } from "react";
 
 import { Row, Col, Card, Avatar, Skeleton } from "antd";
 
-import { useGetUserQuery } from "api/user";
+import { useGetUserWithSSEQuery } from "api/user";
 
 const { Meta } = Card;
 
 const UserEventSource = () => {
-  const { data: user, isFetching } = useGetUserQuery({
+  const { data, isFetching } = useGetUserWithSSEQuery({
     id: 1,
-    delay: 2,
   });
 
   return (
@@ -20,9 +19,9 @@ const UserEventSource = () => {
             <Skeleton />
           ) : (
             <Meta
-              avatar={<Avatar src={user?.avatar} />}
-              title={`${user?.first_name || ""} ${user?.last_name || ""}`}
-              description={user?.email}
+              avatar={<Avatar src={data?.avatar} />}
+              title={`${data?.first_name || ""} ${data?.last_name || ""}`}
+              description={`Score: ${data?.random || 0}`}
             />
           )}
         </Card>

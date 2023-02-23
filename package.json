@@ -26,7 +26,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "sse": "node server/index.js"
   },
   "eslintConfig": {
     "extends": [
@@ -47,7 +48,7 @@
     ]
   },
   "lint-staged": {
-    "*.ts": [
+    "*.ts, *.tsx": [
       "prettier --write",
       "git add"
     ]

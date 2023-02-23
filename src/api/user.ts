@@ -11,6 +11,7 @@ import { GET_USER_ENDPOINT_NAME } from "features/UserPrefetch/constants";
 
 export type User = {
   id: number;
+  random?: number;
   avatar: string;
   first_name: string;
   last_name: string;
@@ -46,6 +47,47 @@ export const userApi = createApi({
       transformResponse: (response: { data: User }) => response.data,
       keepUnusedDataFor: GET_USER_MAX_CACHE_AGE_IN_SECONDS, // See https://redux-toolkit.js.org/rtk-query/usage/cache-behavior#manipulating-cache-behavior
     }),
+    //
+    getUserWithSSE: builder.query<User, { id: number; delay?: number }>({
+      query: ({ id, ...params }) =>
+        ({
+          url: `/${id}`,
+          params,
+        } as FetchArgs),
+      providesTags: ["User"],
+      transformResponse: (response: { data: User }) => response.data,
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        // create an event source connection when the cache subscription starts
+        const eventSource = new EventSource("http://127.0.0.1:8080/user");
+        try {
+          // wait for the initial query to resolve before proceeding
+          await cacheDataLoaded;
+
+          // when data is received from the connection to the server,
+          // update our query result with the received message
+          const listener = (event: MessageEvent) => {
+            const data = JSON.parse(event.data);
+
+            updateCachedData((draft) => {
+              draft.random = data.random;
+            });
+          };
+
+          eventSource.onmessage = listener;
+        } catch {
+          // no-op in case `cacheEntryRemoved` resolves before `cacheDataLoaded`,
+          // in which case `cacheDataLoaded` will throw
+        }
+        // cacheEntryRemoved will resolve when the cache subscription is no longer active
+        await cacheEntryRemoved;
+        // perform cleanup steps once the `cacheEntryRemoved` promise resolves
+        eventSource.close();
+      },
+    }),
+    //
     updateUser: builder.mutation<User, Partial<User> & Pick<User, "id">>({
       query: ({ id, ...patch }: User) => ({
         url: `/${id}`,
@@ -53,6 +95,7 @@ export const userApi = createApi({
         body: patch,
       }),
     }),
+    //
     optimisticUpdateUser: builder.mutation<
       User,
       Partial<User> & Pick<User, "id">
@@ -95,6 +138,7 @@ export const {
   //
   useGetUserQuery,
   useLazyGetUserQuery,
+  useGetUserWithSSEQuery,
   //
   useUpdateUserMutation,
   useOptimisticUpdateUserMutation,
