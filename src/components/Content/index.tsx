@@ -1,11 +1,12 @@
 import { memo } from "react";
 import { Col, Layout, Row, Typography } from "antd";
 
+import { RouteDefinition } from "app/types";
+
 const { Content } = Layout;
 const { Title } = Typography;
 
-const Container = ({ route }: any) => {
-  // TODO: Define this type
+const Container = ({ route }: { route: RouteDefinition }) => {
   const Component = route.component;
 
   return (

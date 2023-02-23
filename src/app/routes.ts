@@ -9,7 +9,9 @@ import UserMutation from "features/UserMutation";
 import CachedUserMutation from "features/CachedUserMutation";
 import CancelUserQuery from "features/CancelUserQuery";
 
-export const routes = [
+import { RouteDefinition } from "./types";
+
+export const routes: RouteDefinition[] = [
   {
     path: "/user-with-actions",
     title: "User with actions and async actions",

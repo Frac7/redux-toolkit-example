@@ -1,3 +1,5 @@
+import { FunctionComponent } from "react";
+
 export interface Paginated<T> {
   data: T[];
   page: number;
@@ -13,4 +15,10 @@ export type User = {
   first_name: string;
   last_name: string;
   email: string;
+};
+
+export type RouteDefinition = {
+  path: string;
+  title: string;
+  component: FunctionComponent;
 };
