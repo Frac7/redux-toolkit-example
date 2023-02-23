@@ -59,3 +59,4 @@ const CancelUserQuery = () => {
 export default memo(CancelUserQuery);
 
 // See https://redux-toolkit.js.org/rtk-query/api/created-api/hooks#uselazyquery
+// Similar to lazy query: https://redux-toolkit.js.org/rtk-query/usage/conditional-fetching, use the skip parameter to delay the request

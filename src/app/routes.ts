@@ -1,9 +1,9 @@
 import PaginatedUserList from "features/PaginatedUserList";
-import FetchUserError from "features/FetchUserError";
-import UserMutation from "features/UserMutation";
-import CachedUser from "features/CachedUser";
 import UserSubscriptionAndState from "features/UserSubscriptionAndState";
 import UserPrefetch from "features/UserPrefetch";
+import FetchUserError from "features/FetchUserError";
+import UserMutation from "features/UserMutation";
+import CachedUserMutation from "features/CachedUserMutation";
 import CancelUserQuery from "features/CancelUserQuery";
 
 export const routes = [
@@ -33,9 +33,9 @@ export const routes = [
     component: UserMutation,
   },
   {
-    path: "/cached-user",
-    title: "Cached User",
-    component: CachedUser,
+    path: "/cached-user-mutation",
+    title: "Cached User Mutation",
+    component: CachedUserMutation,
   },
   {
     path: "/cancel-user-query",

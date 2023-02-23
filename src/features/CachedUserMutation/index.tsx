@@ -11,12 +11,12 @@ import {
   Alert,
 } from "antd";
 
-import { useGetUserQuery, useUpdateUserMutation } from "api/user";
+import { useGetUserQuery, useOptimisticUpdateUserMutation } from "api/user";
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
 
-const UserMutation = () => {
+const CachedUserMutation = () => {
   const [name, setName] = useState("");
 
   const { isLoading: isQueryLoading, data: queryData } = useGetUserQuery({
@@ -29,7 +29,7 @@ const UserMutation = () => {
   }, [queryData]);
 
   const [updateUser, { isLoading: isMutationLoading, data: mutationData }] =
-    useUpdateUserMutation();
+    useOptimisticUpdateUserMutation(); // Using this hook, cached data (i.e. queryData) will be update, see the UserMutation example and the API definition
   const handleMutate = () =>
     updateUser({ ...queryData, first_name: name, id: 1 });
 
@@ -83,4 +83,7 @@ const UserMutation = () => {
   );
 };
 
-export default memo(UserMutation);
+export default memo(CachedUserMutation);
+
+// See https://redux-toolkit.js.org/rtk-query/usage/cache-behavior and https://redux-toolkit.js.org/rtk-query/usage/manual-cache-updates
+// See https://redux-toolkit.js.org/rtk-query/usage/automated-refetching for tag usage
