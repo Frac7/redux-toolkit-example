@@ -1,3 +1,6 @@
+// This script was customized from https://gist.github.com/Parthipan-Natkunam/20547a22e6df7a2b15fd5575eb39824f#file-sse_server-js by Parthipan Natkunam
+// See https://medium.com/geekculture/understanding-server-sent-events-with-node-js-37cfc7aaa7b
+
 // this is just to demo the concept of SSE, not intended for production usage.
 
 const http = require("http");
