@@ -1,6 +1,8 @@
 import PaginatedUserList from "features/PaginatedUserList";
 import UserSubscriptionAndState from "features/UserSubscriptionAndState";
 import UserPrefetch from "features/UserPrefetch";
+import UserPolling from "features/UserPolling";
+import UserEventSource from "features/UserEventSource";
 import FetchUserError from "features/FetchUserError";
 import UserMutation from "features/UserMutation";
 import CachedUserMutation from "features/CachedUserMutation";
@@ -21,6 +23,16 @@ export const routes = [
     path: "/user-prefetch",
     title: "User prefetch",
     component: UserPrefetch,
+  },
+  {
+    path: "/user-polling",
+    title: "User polling",
+    component: UserPolling,
+  },
+  {
+    path: "/user-event-source",
+    title: "User Event Source",
+    component: UserEventSource,
   },
   {
     path: "/fetch-user-error",
