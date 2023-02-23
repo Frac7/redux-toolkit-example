@@ -21,7 +21,7 @@ const UserEventSource = () => {
             <Meta
               avatar={<Avatar src={data?.avatar} />}
               title={`${data?.first_name || ""} ${data?.last_name || ""}`}
-              description={`Score: ${data?.random || 0}`}
+              description={`Score: ${data?.score || 0}`}
             />
           )}
         </Card>

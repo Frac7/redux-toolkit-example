@@ -8,8 +8,8 @@ const port = 8080;
 // A simple dataSource that changes over time
 const dataSource = {};
 const updateDataSource = () => {
-  const random = Math.random() * 12;
-  dataSource.random = random.toFixed(2);
+  const score = Math.random() * 12;
+  dataSource.score = score.toFixed(2);
 };
 
 const requestListener = function (req, res) {

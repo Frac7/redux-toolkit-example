@@ -11,7 +11,7 @@ import { GET_USER_ENDPOINT_NAME } from "features/UserPrefetch/constants";
 
 export type User = {
   id: number;
-  random?: number;
+  score?: number;
   avatar: string;
   first_name: string;
   last_name: string;
@@ -72,7 +72,7 @@ export const userApi = createApi({
             const data = JSON.parse(event.data);
 
             updateCachedData((draft) => {
-              draft.random = data.random;
+              draft.score = data.score;
             });
           };
 
