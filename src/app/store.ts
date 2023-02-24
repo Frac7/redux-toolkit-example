@@ -3,12 +3,15 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import userWithActionsReducer from "features/UserWithActions/slice";
+import usersWithActionsReducer from "features/UserListWithActions/slice";
+
 import { userApi } from "api/user";
 import { rtkQueryErrorLogger } from "./middleware";
 
 export const store = configureStore({
   reducer: {
     userWithActions: userWithActionsReducer,
+    usersWithActions: usersWithActionsReducer,
     // Add the generated reducer as a specific top-level slice
     [userApi.reducerPath]: userApi.reducer,
   },

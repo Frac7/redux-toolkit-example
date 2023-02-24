@@ -1,4 +1,5 @@
 import UserWithActions from "features/UserWithActions";
+import UserListWithActions from "features/UserListWithActions";
 import PaginatedUserList from "features/PaginatedUserList";
 import UserSubscriptionAndState from "features/UserSubscriptionAndState";
 import UserPrefetch from "features/UserPrefetch";
@@ -16,6 +17,11 @@ export const routes: RouteDefinition[] = [
     path: "/user-with-actions",
     title: "User with actions and async actions",
     component: UserWithActions,
+  },
+  {
+    path: "/user-list-with-actions",
+    title: "User list with actions and entity adapter",
+    component: UserListWithActions,
   },
   {
     path: "/paginated-user-list",
