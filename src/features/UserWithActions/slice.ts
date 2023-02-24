@@ -30,7 +30,7 @@ const initialState: UserWithActionsState = {
 // typically used to make async requests.
 export const getUserAsync = createAsyncThunk(
   `${CONTAINER_KEY}/getUser`,
-  async (id: number) => {
+  async (id: number, { getState, dispatch }) => {
     const response = await getUser(id);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
