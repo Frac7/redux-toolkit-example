@@ -1,9 +1,15 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 import { User } from "app/types";
 import { RootState, AppThunk } from "app/store";
 
 import { getUser } from "./api";
+import { CONTAINER_KEY, FAILED, IDLE, LOADING } from "./constants";
 
 export interface UserWithActionsState {
   user?: User;
@@ -13,7 +19,7 @@ export interface UserWithActionsState {
 
 const initialState: UserWithActionsState = {
   user: undefined,
-  status: "idle",
+  status: IDLE,
   score: 0,
 };
 
@@ -23,7 +29,7 @@ const initialState: UserWithActionsState = {
 // code can then be executed and other actions can be dispatched. Thunks are
 // typically used to make async requests.
 export const getUserAsync = createAsyncThunk(
-  "userWithActions/getUser",
+  `${CONTAINER_KEY}/getUser`,
   async (id: number) => {
     const response = await getUser(id);
     // The value we return becomes the `fulfilled` action payload
@@ -32,7 +38,7 @@ export const getUserAsync = createAsyncThunk(
 );
 
 export const userWithActionsSlice = createSlice({
-  name: "userWithActions",
+  name: CONTAINER_KEY,
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
@@ -56,16 +62,16 @@ export const userWithActionsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserAsync.pending, (state, action) => {
-        state.status = "loading";
+        state.status = LOADING;
         state.score = 0;
         state.user = undefined;
       })
       .addCase(getUserAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = IDLE;
         state.user = action.payload;
       })
       .addCase(getUserAsync.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = FAILED;
       });
   },
 });
@@ -78,7 +84,12 @@ export const { incrementScore, decrementScore, changeByAmount } =
 // in the slice file. For example: `useSelector((state: RootState) => state.userWithActions.score)`
 export const selectScore = (state: RootState) => state.userWithActions.score;
 export const selectStatus = (state: RootState) => state.userWithActions.status;
-export const selectUser = (state: RootState) => state.userWithActions.user;
+
+// Memoized selector
+export const selectUser = createSelector(
+  (state: RootState) => state.userWithActions,
+  (userWithActions) => userWithActions.user
+);
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
