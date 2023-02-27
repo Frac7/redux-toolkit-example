@@ -15,11 +15,6 @@ const ActionLogger = () => {
     <Sider width="500px">
       <Row>
         <Col offset={1}>
-          <Title style={{ color: "white" }}>Action logger</Title>
-        </Col>
-      </Row>
-      <Row>
-        <Col offset={1}>
           <Title level={2} style={{ color: "white" }}>
             Last actions dispatched
           </Title>
@@ -41,9 +36,9 @@ const ActionLogger = () => {
                         symbol: "Show payload",
                       }}
                     >
-                      <Text code style={{ color: "white" }}>
-                        {action.payload}
-                      </Text>
+                      <div style={{ color: "white" }}>
+                        <pre>{action.payload}</pre>
+                      </div>
                     </Paragraph>
                   )
                 }
