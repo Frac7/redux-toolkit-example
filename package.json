@@ -27,7 +27,8 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "fix-staged": "lint-staged",
-    "sse": "node server/index.js"
+    "sse": "node server/index.js",
+    "serve": "serve -s build"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +57,7 @@
   "devDependencies": {
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "serve": "^14.2.0"
   }
 }
