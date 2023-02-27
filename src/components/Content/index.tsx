@@ -11,13 +11,13 @@ const Container = ({ route }: { route: RouteDefinition }) => {
 
   return (
     <Content>
-      <Row>
-        <Col offset={3}>
+      <Row justify="center">
+        <Col xs={24} md={16}>
           <Title>{route.title}</Title>
         </Col>
       </Row>
-      <Row>
-        <Col offset={3} xs={12}>
+      <Row justify="center">
+        <Col xs={24} md={16}>
           <Component />
         </Col>
       </Row>
