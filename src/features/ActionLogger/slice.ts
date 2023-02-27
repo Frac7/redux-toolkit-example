@@ -4,7 +4,7 @@ import { RootState } from "app/store";
 import { CONTAINER_KEY, MAX_ACTIONS_TO_STORE } from "./constants";
 
 export interface ActionLoggerState {
-  actions: string[];
+  actions: { type: string; payload: string }[];
 }
 
 const initialState: ActionLoggerState = {

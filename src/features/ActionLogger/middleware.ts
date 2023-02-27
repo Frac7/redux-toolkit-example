@@ -10,7 +10,12 @@ const actionLoggerMiddleware: Middleware =
   (next) =>
   (action) => {
     if (!isLoggerAction(action)) {
-      dispatch(logAction(action.type));
+      const payload = {
+        type: action.type,
+        payload: JSON.stringify(action.payload),
+      };
+
+      dispatch(logAction(payload));
     }
 
     return next(action);

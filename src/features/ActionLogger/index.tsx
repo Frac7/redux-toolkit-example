@@ -6,7 +6,7 @@ import { Col, Layout, Row, Typography, List } from "antd";
 import { selectActions } from "./slice";
 
 const { Sider } = Layout;
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 
 const ActionLogger = () => {
   const actions = useSelector(selectActions);
@@ -31,9 +31,23 @@ const ActionLogger = () => {
           dataSource={actions}
           renderItem={(action) => (
             <List.Item>
-              <Text code style={{ color: "white" }}>
-                {action}
-              </Text>
+              <List.Item.Meta
+                title={<Text style={{ color: "white" }}>{action.type}</Text>}
+                description={
+                  action.payload && (
+                    <Paragraph
+                      ellipsis={{
+                        expandable: true,
+                        symbol: "Show payload",
+                      }}
+                    >
+                      <Text code style={{ color: "white" }}>
+                        {action.payload}
+                      </Text>
+                    </Paragraph>
+                  )
+                }
+              />
             </List.Item>
           )}
         />
