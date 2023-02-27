@@ -5,11 +5,15 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import userWithActionsReducer from "features/UserWithActions/slice";
 import usersWithActionsReducer from "features/UserListWithActions/slice";
 
+import actionLoggerReducer from "features/ActionLogger/slice";
+import actionLoggerMiddleware from "features/ActionLogger/middleware";
+
 import { userApi } from "api/user";
 import { rtkQueryErrorLogger } from "./middleware";
 
 export const store = configureStore({
   reducer: {
+    actionLogger: actionLoggerReducer,
     userWithActions: userWithActionsReducer,
     usersWithActions: usersWithActionsReducer,
     // Add the generated reducer as a specific top-level slice
@@ -18,7 +22,11 @@ export const store = configureStore({
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(userApi.middleware, rtkQueryErrorLogger),
+    getDefaultMiddleware().concat(
+      userApi.middleware,
+      rtkQueryErrorLogger,
+      actionLoggerMiddleware
+    ),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

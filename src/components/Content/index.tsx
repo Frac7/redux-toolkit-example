@@ -12,12 +12,12 @@ const Container = ({ route }: { route: RouteDefinition }) => {
   return (
     <Content>
       <Row justify="center">
-        <Col xs={24} md={16}>
+        <Col xs={24} md={22}>
           <Title>{route.title}</Title>
         </Col>
       </Row>
       <Row justify="center">
-        <Col xs={24} md={16}>
+        <Col xs={24} md={22}>
           <Component />
         </Col>
       </Row>

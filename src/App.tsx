@@ -7,6 +7,7 @@ import Home from "features/Home";
 import Content from "components/Content";
 
 import { routes } from "app/routes";
+import ActionLogger from "features/ActionLogger";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           ))}
           <Route path="/" element={<Home />} />
         </Routes>
+        <ActionLogger />
       </Layout>
     </BrowserRouter>
   );
