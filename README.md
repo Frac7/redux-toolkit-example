@@ -8,6 +8,7 @@ It shows some basic use cases for RTK:
 - Handle data (query/mutation) data with RTK query (some use cases including useQuery, useLazyQuery, useQuerySubscription + useQueryState);
 - Prefetching;
 - Patch data with Event Source;
-- Data caching (API call optimization).
+- Data caching (API call optimization);
+- Custom middleware: request status feedback and action dispatch logging.
 
 Data fetching is performed using [reqres.in](https://reqres.in/).
