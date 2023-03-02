@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
 
-It show some basic use cases for RTK:
+It shows some basic use cases for RTK:
 - Fetch data with actions, async actions, using Redux Thunk;
 - Handle data (query/mutation) using the entity adapter;
 - Handle data (query/mutation) data with RTK query (some use cases including useQuery, useLazyQuery, useQuerySubscription + useQueryState);
